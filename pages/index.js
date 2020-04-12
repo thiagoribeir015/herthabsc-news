@@ -1,5 +1,9 @@
 import Head from 'next/head'
 
+const a = {
+  a: 1,
+}
+
 const Home = () => (
   <div className="container">
     <Head>
@@ -8,7 +12,7 @@ const Home = () => (
     </Head>
 
     <main>
-      <h1 className="title">
+      <h1 className="text-blue-500 underline text-sm title">
         Welcome to <a href="https://nextjs.org">Next.js!</a>
       </h1>
 
