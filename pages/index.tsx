@@ -1,13 +1,12 @@
+import { NextPage } from 'next'
 import Head from 'next/head'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import cx from 'classnames'
-import { isMobile } from 'react-device-detect'
+import MobileDetect from 'mobile-detect'
 
-type Timeline = {
-  userName: string
-  logo: string
-  flag?: string
-}
+// import { isMobile } from 'react-device-detect'
+
+type Timeline = { userName: string; logo: string; flag?: string }
 
 const timelines: Timeline[] = [
   { userName: 'HerthaBSC', flag: '🇩🇪', logo: '/assets/hertha-logo-de.jpg' },
@@ -44,10 +43,7 @@ const renderTimeline: React.FC<Timeline> = ({ userName }) => {
   )
 }
 
-type ProfileLogosProps = {
-  activeList: Object
-  onClick: Function
-}
+type ProfileLogosProps = { activeList: Object; onClick: Function }
 
 const ProfileLogos: React.FC<ProfileLogosProps> = ({ activeList, onClick }) => {
   return (
@@ -90,24 +86,37 @@ const ProfileLogos: React.FC<ProfileLogosProps> = ({ activeList, onClick }) => {
   )
 }
 
-const initialState: Object = { HerthaBSC: true }
-// const initialState: Object = isMobile
-//   ? {
-//       HerthaBSC: true,
-//     }
-//   : timelines.reduce((acc, timeline) => {
-//       acc[timeline.userName] = true
-//       return acc
-//     }, {})
+const initialStateDesktop = timelines.reduce((acc, timeline) => {
+  acc[timeline.userName] = true
+  return acc
+}, {})
 
-const Index: React.FC = () => {
-  const [activeList, setActive] = useState(initialState)
+const initialStateMobile = { HerthaBSC: true }
 
-  console.log(isMobile)
-  console.log(activeList)
+// // type IndexProps = { isMobile: Boolean }
+// interface StatelessPage {
+//   isMobile: Boolean
+// }
+
+const Index: NextPage<any> = ({ isMobile }) => {
+  const [activeList, setActive] = useState(
+    isMobile ? initialStateMobile : initialStateDesktop
+  )
+
+  // Similar to componentDidMount and componentDidUpdate:
+  useEffect(() => {
+    // Update the document title using the browser API
+    // document.title = `You clicked ${count} times`
+    console.log('useEffect', { isMobile })
+    // setActive(isMobile ? initialStateMobile : initialStateDesktop)
+  }, [isMobile])
+
+  console.log('render', { isMobile })
+  console.log({ activeList })
 
   const toggleItem = (item) => {
     console.log('toggleItem', item)
+
     if (isMobile) {
       const disableAll = timelines.reduce((acc, timeline) => {
         acc[timeline.userName] = false
@@ -156,7 +165,7 @@ const Index: React.FC = () => {
         </div>
 
         {/* timelines */}
-        <div className="flex flex-row h-full p-4">
+        <div className="flex flex-row h-full p-1 pb-0 md:p-4 md:pb-0">
           {timelines.map(
             (timeline) =>
               activeList[timeline.userName] && renderTimeline(timeline)
@@ -181,6 +190,13 @@ const Index: React.FC = () => {
       `}</style>
     </div>
   )
+}
+
+Index.getInitialProps = async ({ req }) => {
+  const userAgent = req ? req.headers['user-agent'] : navigator.userAgent
+  const mobileDetect = new MobileDetect(userAgent)
+
+  return { isMobile: mobileDetect.phone() }
 }
 
 export default Index
