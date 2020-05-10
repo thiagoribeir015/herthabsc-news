@@ -1,10 +1,12 @@
+import { useState, useEffect } from 'react'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import { useState, useEffect } from 'react'
 import cx from 'classnames'
 import MobileDetect from 'mobile-detect'
 
-// import { isMobile } from 'react-device-detect'
+/************
+ * Timeline
+ ***********/
 
 type Timeline = { userName: string; logo: string; flag?: string }
 
@@ -42,6 +44,10 @@ const renderTimeline: React.FC<Timeline> = ({ userName }) => {
     </div>
   )
 }
+
+/************
+ * Logos
+ ***********/
 
 type ProfileLogosProps = { activeList: Object; onClick: Function }
 
@@ -91,6 +97,10 @@ const initialStateDesktop = timelines.reduce((acc, timeline) => {
   return acc
 }, {})
 
+/************
+ * Index
+ ***********/
+
 const initialStateMobile = { HerthaBSC: true }
 
 // // type IndexProps = { isMobile: Boolean }
@@ -105,8 +115,6 @@ const Index: NextPage<any> = ({ isMobile }) => {
 
   // Similar to componentDidMount and componentDidUpdate:
   useEffect(() => {
-    // Update the document title using the browser API
-    // document.title = `You clicked ${count} times`
     console.log('useEffect', { isMobile })
     // setActive(isMobile ? initialStateMobile : initialStateDesktop)
   }, [isMobile])
@@ -155,8 +163,6 @@ const Index: NextPage<any> = ({ isMobile }) => {
           </div>
         </div>
 
-        {/* mobile icons */}
-        {/* lg:hidden */}
         <div className="px-4 pt-4">
           <ProfileLogos
             activeList={activeList}
