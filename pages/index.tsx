@@ -14,11 +14,12 @@ const timelines: Timeline[] = [
   { userName: 'HerthaBSC', flag: '🇩🇪', logo: '/assets/hertha-logo-de.jpg' },
   { userName: 'HerthaBSC_EN', flag: '🇬🇧', logo: '/assets/hertha-logo-en.jpg' },
   { userName: 'HerthaBSC_ES', flag: '🇪🇦', logo: '/assets/hertha-logo-en.jpg' },
-  {
-    userName: 'HerthaBubis',
-    logo: '/assets/hertha-logo-bubis.jpg',
-    // flag: '🇬🇧',
-  },
+  { userName: 'hbsc_brasil', flag: '🇧🇷', logo: '/assets/hertha-logo-en.jpg' },
+  // {
+  //   userName: 'HerthaBubis',
+  //   logo: '/assets/hertha-logo-bubis.jpg',
+  //   // flag: '🇬🇧',
+  // },
   {
     userName: 'kicker_BSC',
     logo: '/assets/hertha-logo-kicker.jpg',
@@ -39,7 +40,7 @@ const renderTimeline: React.FC<Timeline> = ({ userName }) => {
       <script
         async
         src="https://platform.twitter.com/widgets.js"
-        // charset="utf-8"
+      // charset="utf-8"
       ></script>
     </div>
   )
@@ -65,7 +66,7 @@ const ProfileLogos: React.FC<ProfileLogosProps> = ({ activeList, onClick }) => {
           <img
             src={timeline.logo}
             className="timeline-logo sm:h-16 border-white border-2 cursor-pointer"
-            // h-12
+          // h-12
           />
           {timeline.flag && (
             <span className="timeline-logo-flag absolute text-2xl sm:text-3xl pl-8 sm:pl-12">
